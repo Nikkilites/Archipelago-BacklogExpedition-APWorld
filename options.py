@@ -6,7 +6,7 @@ from Options import OptionGroup, PerGameCommonOptions, Range, OptionDict, Option
 
 class Backlog(OptionList):
     """
-    Games that will be beat in their interity on the islands.
+    Games that will be beat in their entirety on the islands.
     These will always be included, and generate as many checks as selected.
     Maximum of 20 games allowed, with a maximum of 20 parts per game.
     """
@@ -29,7 +29,7 @@ class Backlog(OptionList):
 class LimitedLocations(OptionList):
     """
     Games that will be used to fill up islands with extra things to do alongside the game you want to beat.
-    These only exist a limited amount of times.
+    These only exist a limited amount of times, but are not guaranteed to exist.
     """
 
     display_name = "Limited Locations"
@@ -70,12 +70,11 @@ class  MaxLocationsPerIsland(Range):
 
 class  BacklogBeatenToGoal(Range):
     """
-    How many Locations each island should try to be filled with.
-    If no repeatable locations are added, generation will fill up as much as possible
-    A maximum of 20.
+    How many Backlog Games you need to Beat to Goal.
+    It can only go as high as the amount of Backlog Games added.
     """
 
-    display_name = "Backlog Items Beaten To Goal"
+    display_name = "Backlog Games Beaten To Goal"
 
     range_start = 1
     range_end = 20
