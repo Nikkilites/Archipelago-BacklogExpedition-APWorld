@@ -2,10 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from BaseClasses import CollectionState
-
-from worlds.generic.Rules import add_rule, set_rule
-
 from .data import extra_regions
 
 if TYPE_CHECKING:

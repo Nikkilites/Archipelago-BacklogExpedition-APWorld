@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from schema import Schema, And
 
-from Options import OptionGroup, PerGameCommonOptions, Range, OptionDict, OptionList
+from Options import OptionGroup, PerGameCommonOptions, Range, OptionList
 
 
 class Backlog(OptionList):
