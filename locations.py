@@ -63,7 +63,6 @@ def create_events(world: BExWorld) -> None:
 
     guffin_id = 0
     for region in regions:
-
         location = Location(world.player, f"Retrieved the {mcguffins[guffin_id]}", None, region)
         region.locations.append(location)
         
