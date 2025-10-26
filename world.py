@@ -1,5 +1,5 @@
 from collections.abc import Mapping
-from typing import Any
+from typing import Any, Dict
 
 from worlds.AutoWorld import World
 
@@ -24,9 +24,11 @@ class BExWorld(World):
 
     origin_region_name = "Starting Island"
 
+    hint_data: Dict[int, str] = dict()
+
     def create_regions(self) -> None:
         regions.create_and_connect_regions(self)
-        locations.create_all_locations(self)
+        self.hint_data = locations.create_all_locations(self)
 
     def set_rules(self) -> None:
         rules.set_all_rules(self)
@@ -44,3 +46,6 @@ class BExWorld(World):
         return self.options.as_dict(
             "locations_per_island", "beaten_to_goal", "backlog", "limited_locations", "repeatable_locations"
         )
+    
+    def extend_hint_information(self, hint_data: Dict[int, Dict[int, str]]):
+        hint_data[self.player] = self.hint_data
