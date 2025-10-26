@@ -55,8 +55,11 @@ def create_item_with_correct_classification(world: BExWorld, name: str) -> BExIt
 def create_all_items(world: BExWorld) -> None:
     itempool = []
 
-    for region in extra_regions:
-        itempool.append(world.create_item(f"{region} Rune"))
+    option = getattr(world.multiworld.worlds[world.player].options, 'backlog', None)
+    if option is not None:
+        count = len(option.value)
+        for i in range(count - 1):
+            itempool.append(world.create_item(f"{extra_regions[i]} Rune"))
 
     number_of_items = len(itempool)
     number_of_unfilled_locations = len(world.multiworld.get_unfilled_locations(world.player))
