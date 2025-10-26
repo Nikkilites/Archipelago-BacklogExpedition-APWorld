@@ -34,13 +34,13 @@ class LimitedLocations(OptionList):
 
     display_name = "Limited Locations"
     default = [
-        {"locationName": "Play a level of Train Valley", "count": 10},
-        {"locationName": "Shinyhunt a Pikachu", "count": 1},
+        {"name": "Play a level of Train Valley", "count": 10},
+        {"name": "Shinyhunt a Pikachu", "count": 1},
     ]
 
     schema = Schema([
         {
-            "locationName": And(str, len),
+            "name": And(str, len),
             "count": And(int, lambda x: x > 0),
         }
     ])
