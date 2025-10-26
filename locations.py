@@ -40,9 +40,10 @@ def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | No
 def get_regions(world: BExWorld):
     regions = [world.get_region("Starting Island")]
 
-    option = getattr(world.multiworld.worlds[world.player].options, 'games_in_world', None)
+    option = getattr(world.multiworld.worlds[world.player].options, 'backlog', None)
     if option is not None:
-        for i in range(option - 1):
+        count = len(option.value)
+        for i in range(count - 1):
             regions.append(world.get_region(f"{extra_regions[i]} Island"))
     
     return regions

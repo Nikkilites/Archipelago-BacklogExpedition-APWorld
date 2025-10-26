@@ -42,5 +42,5 @@ class BExWorld(World):
 
     def fill_slot_data(self) -> Mapping[str, Any]:
         return self.options.as_dict(
-            "locations_per_island", "beaten_to_goal", "games_in_world", "backlog", "limited_locations", "repeatable_locations"
+            "locations_per_island", "beaten_to_goal", "backlog", "limited_locations", "repeatable_locations"
         )

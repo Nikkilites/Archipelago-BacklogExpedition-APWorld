@@ -80,24 +80,10 @@ class  BacklogBeatenToGoal(Range):
     range_end = 20
     default = 10
 
-class  Temporary(Range):
-    """
-    Temporary to pick amount of games added
-    A maximum of 20.
-    """
-
-    display_name = "Temporary"
-
-    range_start = 1
-    range_end = 20
-    default = 10
-
-
 @dataclass
 class BExOptions(PerGameCommonOptions):
     locations_per_island: MaxLocationsPerIsland
     beaten_to_goal: BacklogBeatenToGoal
-    games_in_world: Temporary
     backlog: Backlog
     limited_locations: LimitedLocations
     repeatable_locations: RepeatableLocations
@@ -106,7 +92,7 @@ class BExOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup(
         "Game Options",
-        [MaxLocationsPerIsland, BacklogBeatenToGoal, Temporary],
+        [MaxLocationsPerIsland, BacklogBeatenToGoal],
     ),
     OptionGroup(
         "Game Additions",
