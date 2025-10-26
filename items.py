@@ -14,11 +14,11 @@ def create_item_name_to_id() -> dict[str, int]:
     item_id_dict = {}
     current_id = 1
 
-    for region in extra_regions:
-        item_id_dict[f"{region} Rune"] = current_id
-        current_id += 1
     for filler in fillers:
         item_id_dict[filler] = current_id
+        current_id += 1
+    for region in extra_regions:
+        item_id_dict[f"{region} Rune"] = current_id
         current_id += 1
    
     return item_id_dict
@@ -31,10 +31,10 @@ ITEM_ID_TO_NAME = {v: k for k, v in ITEM_NAME_TO_ID.items()}
 def create_item_classification() -> dict[str, ItemClassification]:
     item_classification_dict = {}
 
-    for region in extra_regions:
-        item_classification_dict[f"{region} Rune"] = ItemClassification.progression
     for filler in fillers:
         item_classification_dict[filler] = ItemClassification.filler
+    for region in extra_regions:
+        item_classification_dict[f"{region} Rune"] = ItemClassification.progression
    
     return item_classification_dict
 
