@@ -36,4 +36,4 @@ def connect_regions(world: BExWorld) -> None:
         count = len(option.value)
         for i in range(count - 1):
             extra_island = world.get_region(f"{extra_regions[i]} Island")
-            starting_island.connect(extra_island, f"Starting Island to {extra_regions[i]} Island", lambda state: state.has(f"{extra_regions[i]} Rune", world.player))
+            starting_island.connect(extra_island, f"Starting Island to {extra_regions[i]} Island", lambda state, idx=i: state.has(f"{extra_regions[idx]} Rune", world.player))
