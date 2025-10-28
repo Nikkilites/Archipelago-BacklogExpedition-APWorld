@@ -15,7 +15,14 @@
     "Glacier Caves",
     "Tar Pits",
     "Candy",
-    "Christmas"
+    "Christmas",
+    "Trash",
+    "Spooky",
+    "Mushroom",
+    "Steampunk",
+    "Moon",
+    "Board Game",
+    "Puzzle"
   ],
   "monsters": [
     "Goblin",
@@ -111,6 +118,13 @@
     "Glacier Diadem",
     "Tar Bracelet",
     "Candycane",
-    "Christmas Present"
+    "Christmas Present",
+    "Another Man's Treasure",
+    "Forgotten Mask",
+    "Giant Toadstool",
+    "Miniature Mech",
+    "Moon Rocks",
+    "Golden Meeple",
+    "The Missing Piece"
   ]
 }
