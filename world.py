@@ -43,9 +43,9 @@ class BExWorld(World):
         return items.get_random_filler_item_name(self)
 
     def fill_slot_data(self) -> Mapping[str, Any]:
-        return self.options.as_dict(
-            "locations_per_island", "beaten_to_goal", "backlog", "limited_locations", "repeatable_locations"
-        )
+        slot_data = self.options.as_dict("beaten_to_goal")
+        slot_data["hint_data"] = self.hint_data
+        return slot_data
     
     def extend_hint_information(self, hint_data: Dict[int, Dict[int, str]]):
         hint_data[self.player] = self.hint_data
