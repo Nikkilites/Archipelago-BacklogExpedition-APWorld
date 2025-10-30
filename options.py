@@ -26,9 +26,28 @@ class Backlog(OptionList):
         }
     ])
 
+class PrioritizedLocations(OptionList):
+    """
+    Objectives that will be used to fill up islands.
+    These only exist a limited amount of times, and will be prioritized over other locations (Except Backlog).
+    """
+
+    display_name = "Limited Locations"
+    default = [
+        {"name": "Play a level of Train Valley", "count": 10},
+        {"name": "Shinyhunt a Pikachu", "count": 1},
+    ]
+
+    schema = Schema([
+        {
+            "name": And(str, len),
+            "count": And(int, lambda x: x > 0),
+        }
+    ])
+
 class LimitedLocations(OptionList):
     """
-    Games that will be used to fill up islands with extra things to do alongside the game you want to beat.
+    Objectives that will be used to fill up islands.
     These only exist a limited amount of times, but are not guaranteed to exist.
     """
 
@@ -47,18 +66,43 @@ class LimitedLocations(OptionList):
 
 class RepeatableLocations(OptionList):
     """
-    Games that will be used to fill up islands with extra things to do alongside the game you want to beat.
+    Objectives that will be used to fill up islands.
     These will be repeated as many times as needed to fill up islands.
     """
 
     display_name = "Repeatable Locations"
     default = ["Do a run of Vampire Survivors", "Gain an Achievement in Vampire Survivors", "Obtain a shiny pokemon"]
 
+class TreasuresToGoal(Range):
+    """
+    How many Treasures you need to find to Goal.
+    It can only go as high as the Max Number Of Islands.
+    """
+
+    display_name = "Treasures To Goal"
+
+    range_start = 1
+    range_end = 20
+    default = 10
+
+class  MaxNumberOfIslands(Range):
+    """
+    How many Islands your world will have.
+    An Island that cannot be filled with a Backlog Game will instead be filled with random objectives from the other lists
+    A maximum of 20, and minimum of 1.
+    """
+
+    display_name = "Max Number Of Islands"
+
+    range_start = 1
+    range_end = 20
+    default = 20
 
 class  MaxLocationsPerIsland(Range):
     """
     How many Locations each island should try to be filled with.
-    If no repeatable locations are added, generation will fill up as much as possible
+    If no repeatable locations are added, generation will fill up as much as possible.
+    Games put in Backlog are guaranteed to exist though.
     A maximum of 20.
     """
 
@@ -68,23 +112,14 @@ class  MaxLocationsPerIsland(Range):
     range_end = 20
     default = 20
 
-class  BacklogBeatenToGoal(Range):
-    """
-    How many Backlog Games you need to Beat to Goal.
-    It can only go as high as the amount of Backlog Games added.
-    """
-
-    display_name = "Backlog Games Beaten To Goal"
-
-    range_start = 1
-    range_end = 20
-    default = 10
 
 @dataclass
 class BExOptions(PerGameCommonOptions):
+    islands: MaxNumberOfIslands
     locations_per_island: MaxLocationsPerIsland
-    beaten_to_goal: BacklogBeatenToGoal
+    beaten_to_goal: TreasuresToGoal
     backlog: Backlog
+    prioritized_locations: PrioritizedLocations
     limited_locations: LimitedLocations
     repeatable_locations: RepeatableLocations
 
@@ -92,10 +127,10 @@ class BExOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup(
         "Game Options",
-        [MaxLocationsPerIsland, BacklogBeatenToGoal],
+        [MaxNumberOfIslands, MaxLocationsPerIsland, TreasuresToGoal],
     ),
     OptionGroup(
         "Game Additions",
-        [Backlog, LimitedLocations, RepeatableLocations],
+        [Backlog, PrioritizedLocations, LimitedLocations, RepeatableLocations],
     ),
 ]
