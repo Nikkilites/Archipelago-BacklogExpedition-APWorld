@@ -18,10 +18,9 @@ def create_all_regions(world: BExWorld) -> None:
 
     regions = [starting_island]
 
-    option = getattr(world.multiworld.worlds[world.player].options, 'backlog', None)
-    if option is not None:
-        count = len(option.value)
-        for i in range(count - 1):
+    islands = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
+    if islands is not None:
+        for i in range(islands - 1):
             extra_island = Region(f"{extra_regions[i]} Island", world.player, world.multiworld)
             regions.append(extra_island)
 
@@ -31,9 +30,8 @@ def create_all_regions(world: BExWorld) -> None:
 def connect_regions(world: BExWorld) -> None:
     starting_island = world.get_region("Starting Island")
 
-    option = getattr(world.multiworld.worlds[world.player].options, 'backlog', None)
-    if option is not None:
-        count = len(option.value)
-        for i in range(count - 1):
+    islands = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
+    if islands is not None:
+        for i in range(islands - 1):
             extra_island = world.get_region(f"{extra_regions[i]} Island")
             starting_island.connect(extra_island, f"Starting Island to {extra_regions[i]} Island", lambda state, idx=i: state.has(f"{extra_regions[idx]} Rune", world.player))
