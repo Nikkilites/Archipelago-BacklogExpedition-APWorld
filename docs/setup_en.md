@@ -8,5 +8,6 @@
 ## Installation and Connecting
 
 1. Download the game
-2. Connect to the server within the game
-3. Enjoy!
+2. If you are on Win 11, run the .exe as administrator (The game does not work properly in Powershell, and that is the default of win 11. Please use Command Prompt)
+4. Connect to the server within the game
+5. Enjoy!
