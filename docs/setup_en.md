@@ -2,7 +2,7 @@
 
 ## Required Software
 
-- Backlog Expedition from: (Will release soon)
+- Backlog Expedition from: [GitHub](https://github.com/Nikkilites/Archipelago-BacklogExpedition-Game/releases)
 - Backlog Expedition AP World from: [GitHub](https://github.com/Nikkilites/Archipelago-BacklogExpedition-APWorld/releases/tag/v1.0.0)
 
 ## Installation and Connecting
