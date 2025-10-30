@@ -13,10 +13,9 @@ def set_all_rules(world: BExWorld) -> None:
 
 def set_completion_condition(world: BExWorld) -> None:
     mcguffins_available = []
-    option = getattr(world.multiworld.worlds[world.player].options, 'backlog', None)
-    if option is not None:
-        count = len(option.value)
-        for i in range(count - 1):
+    islands = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
+    if islands is not None:
+        for i in range(islands - 1):
             mcguffins_available.append(mcguffins[i])
 
     goal_option = getattr(world.multiworld.worlds[world.player].options, "beaten_to_goal", None)
