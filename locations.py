@@ -81,14 +81,12 @@ def create_main_objective_locations(world: BExWorld, regions: list) -> None:
     backlog_option = getattr(world.multiworld.worlds[world.player].options, "backlog", None)
     backlog_list = list(backlog_option.value) if backlog_option is not None else []
 
-    # Shuffle the list of backlog games
     world.random.shuffle(backlog_list)
-
     # Add backlog games
     for region, picked_game in zip(regions, backlog_list):
         locations_to_add = []
         world.random.shuffle(monsters)
-        
+
         for i in range(int(picked_game.get("count"))):
             location = f"Slay the {monsters[i]} in {region.name}"
 
@@ -98,16 +96,20 @@ def create_main_objective_locations(world: BExWorld, regions: list) -> None:
         loc_w_ids = get_location_names_with_ids(locations_to_add)
         region.add_locations(loc_w_ids, BExLocation)
 
+
 def create_secondary_objective_locations(world: BExWorld, regions: list) -> None:
     # Load relevant options
+    prio_option = getattr(world.multiworld.worlds[world.player].options, "prioritized_locations", None)
     limited_option = getattr(world.multiworld.worlds[world.player].options, "limited_locations", None)
     repeatable_option = getattr(world.multiworld.worlds[world.player].options, "repeatable_locations", None)
     max_locations = getattr(world.multiworld.worlds[world.player].options, "locations_per_island", None)
 
+    prio_list = deepcopy(prio_option.value) if prio_option is not None else []
     limited_list = deepcopy(limited_option.value) if limited_option is not None else []
     repeatable_list = list(repeatable_option.value) if repeatable_option is not None else []
 
-    if not limited_list and not repeatable_list:
+
+    if not limited_list and not repeatable_list and not prio_list:
         return
 
     # Create shuffled containers for each region
@@ -121,18 +123,46 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
         region_containers[region.name] = shuffled_copy
         region_container_indices[region.name] = 0
 
-    # Create Locations and hints
-    while limited_list or repeatable_list:
-        # Find the region with the fewest locations
-        region = min(
-            (r for r in regions if len(r.locations) < max_locations),
-            key=lambda r: len(r.locations),
-            default=None
-        )
+    # Calculate Objectives needed
+    existing_locations = 0
+    for region in regions:
+        existing_locations += len(region.locations)
 
-        # If all regions have the max amount of locations, stop
-        if region is None:
+    objectives_needed = (len(regions) * max_locations) - existing_locations
+
+    # Create Objectives
+    objectives = []
+
+    for objective in prio_list:
+        if len(objectives) >= objectives_needed:
             break
+        while int(objective.get("count")) > 0:
+            objectives.append(objective.get("name"))
+            objective["count"] -= 1
+    
+    while (len(objectives) < objectives_needed) and (limited_list or repeatable_list):
+        objectives.append(get_random_objective(world, limited_list, repeatable_list))
+
+    world.random.shuffle(objectives)
+
+    for region in regions:
+        if len(region.locations) == 0:
+            locations_to_add = []
+            world.random.shuffle(monsters)
+
+            location = ""
+            for i in range(max_locations):
+                location = f"Slay the {monsters[i]} in {region.name}"
+                locations_to_add.append(location)
+                create_hint(location, objectives.pop(0))
+
+            loc_w_ids = get_location_names_with_ids(locations_to_add)
+            region.add_locations(loc_w_ids, BExLocation)
+    
+
+    # Create Locations and hints
+    for objective in objectives:
+        region = get_region_with_fewest_locations(regions, max_locations)
 
         # Create location name
         region_container_id = region_container_indices[region.name]
@@ -141,32 +171,40 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
         location = f"Opened the {container_name} in {region.name}"
 
         # Add location and hint
+        create_hint(location, objective)
         loc_w_ids = get_location_names_with_ids([location])
-        region.add_locations(loc_w_ids, BExLocation)
-        create_secondary_objective_and_hint(world, location, limited_list, repeatable_list)
+        region.add_locations(loc_w_ids, BExLocation) 
 
         # Make sure the same container does not get reused for this region
         region_container_indices[region.name] += 1
 
 
-def create_secondary_objective_and_hint(world: BExWorld, location: str, limited_list: list, repeatable_list: list) -> None:
+def get_random_objective(world: BExWorld, limited_list: list, repeatable_list: list) -> str:
     # Randomly pick which objective should be assigned to this location
     objective_id = world.random.randint(0, len(limited_list) + len(repeatable_list) - 1)
 
     # Find the correct objective and create the hint
     if objective_id > len(limited_list) - 1:
         objective = repeatable_list[objective_id-len(limited_list)]
-        create_hint(location, objective)
+        return objective
     else:
         objective = limited_list[objective_id]
-        create_hint(location, objective.get("name"))
+        objective_name = objective.get("name")
 
         objective["count"] -= 1
-        if objective.get("count") < 1:
+        if int(objective.get("count")) < 1:
             limited_list.remove(objective)
+        
+        return objective_name
 
 def create_hint(location: str, objective: str) -> None:
     loc_w_ids = get_location_names_with_ids([location])
     location_id = loc_w_ids[location]
     hint_data[location_id] = objective
-    
+
+def get_region_with_fewest_locations(regions: list, max_locations: int) -> str:
+    return min(
+        (r for r in regions if len(r.locations) < max_locations),
+        key=lambda r: len(r.locations),
+        default=None
+    )
