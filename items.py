@@ -55,10 +55,9 @@ def create_item_with_correct_classification(world: BExWorld, name: str) -> BExIt
 def create_all_items(world: BExWorld) -> None:
     itempool = []
 
-    option = getattr(world.multiworld.worlds[world.player].options, 'backlog', None)
+    option = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
     if option is not None:
-        count = len(option.value)
-        for i in range(count - 1):
+        for i in range(option - 1):
             itempool.append(world.create_item(f"{extra_regions[i]} Rune"))
 
     number_of_items = len(itempool)
