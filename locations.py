@@ -36,8 +36,6 @@ LOCATION_NAME_TO_ID = create_location_name_to_id()
 class BExLocation(Location):
     game = "Backlog Expedition"
 
-hint_data: Dict[int, str] = dict()
-
 def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | None]:
     return {location_name: LOCATION_NAME_TO_ID[location_name] for location_name in location_names}
 
@@ -55,7 +53,6 @@ def get_regions(world: BExWorld):
 def create_all_locations(world: BExWorld) -> dict[int, str]:
     create_regular_locations(world)
     create_events(world)
-    return hint_data
 
 def create_events(world: BExWorld) -> None:
     regions = get_regions(world)
@@ -91,7 +88,7 @@ def create_main_objective_locations(world: BExWorld, regions: list) -> None:
             location = f"Slay the {monsters[i]} in {region.name}"
 
             locations_to_add.append(location)
-            create_hint(location, f"Complete a {picked_game.get('type')} of {picked_game.get('name')}")
+            create_hint(world, location, f"Complete a {picked_game.get('type')} of {picked_game.get('name')}")
 
         loc_w_ids = get_location_names_with_ids(locations_to_add)
         region.add_locations(loc_w_ids, BExLocation)
@@ -160,7 +157,7 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
             for i in range(max_locations):
                 location = f"Slay the {monsters[i]} in {region.name}"
                 locations_to_add.append(location)
-                create_hint(location, objectives.pop(0))
+                create_hint(world, location, objectives.pop(0))
 
             loc_w_ids = get_location_names_with_ids(locations_to_add)
             region.add_locations(loc_w_ids, BExLocation)
@@ -177,7 +174,7 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
         location = f"Opened the {container_name} in {region.name}"
 
         # Add location and hint
-        create_hint(location, objective)
+        create_hint(world, location, objective)
         loc_w_ids = get_location_names_with_ids([location])
         region.add_locations(loc_w_ids, BExLocation) 
 
@@ -203,10 +200,10 @@ def get_random_objective(world: BExWorld, limited_list: list, repeatable_list: l
         
         return objective_name
 
-def create_hint(location: str, objective: str) -> None:
+def create_hint(world: BExWorld, location: str, objective: str) -> None:
     loc_w_ids = get_location_names_with_ids([location])
     location_id = loc_w_ids[location]
-    hint_data[location_id] = objective
+    world.hint_data[location_id] = objective
 
 def get_region_with_fewest_locations(regions: list, max_locations: int) -> str:
     return min(

@@ -24,11 +24,13 @@ class BExWorld(World):
 
     origin_region_name = "Starting Island"
 
-    hint_data: Dict[int, str] = dict()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.hint_data: Dict[int, str] = {}
 
     def create_regions(self) -> None:
         regions.create_and_connect_regions(self)
-        self.hint_data = locations.create_all_locations(self)
+        locations.create_all_locations(self)
 
     def set_rules(self) -> None:
         rules.set_all_rules(self)
