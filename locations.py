@@ -145,6 +145,7 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
 
     world.random.shuffle(objectives)
 
+    # Create shuffled islands
     for region in regions:
         if len(region.locations) == 0:
             locations_to_add = []
@@ -160,7 +161,7 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
             region.add_locations(loc_w_ids, BExLocation)
     
 
-    # Create Locations and hints
+    # Create Locations and hints to fill islands
     for objective in objectives:
         region = get_region_with_fewest_locations(regions, max_locations)
 
