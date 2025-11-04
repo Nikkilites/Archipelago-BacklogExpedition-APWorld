@@ -15,7 +15,7 @@ def set_completion_condition(world: BExWorld) -> None:
     mcguffins_available = []
     islands = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
     if islands is not None:
-        for i in range(islands - 1):
+        for i in range(islands):
             mcguffins_available.append(mcguffins[i])
 
     goal_option = getattr(world.multiworld.worlds[world.player].options, "beaten_to_goal", None)
