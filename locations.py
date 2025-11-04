@@ -126,7 +126,12 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
     # Calculate Objectives needed
     existing_locations = 0
     for region in regions:
-        existing_locations += len(region.locations)
+        regions_locations_count = len(region.locations)
+
+        if len(region.locations) > max_locations:
+            regions_locations_count = max_locations
+            
+        existing_locations += regions_locations_count
 
     objectives_needed = (len(regions) * max_locations) - existing_locations
 
