@@ -31,7 +31,8 @@ def connect_regions(world: BExWorld) -> None:
     starting_island = world.get_region("Starting Island")
 
     islands = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
+    runes_req = getattr(world.multiworld.worlds[world.player].options, 'runes_required', None)
     if islands is not None:
         for i in range(islands - 1):
             extra_island = world.get_region(f"{extra_regions[i]} Island")
-            starting_island.connect(extra_island, f"Starting Island to {extra_regions[i]} Island", lambda state, idx=i: state.has(f"{extra_regions[idx]} Rune", world.player))
+            starting_island.connect(extra_island, f"Starting Island to {extra_regions[i]} Island", lambda state, idx=i: state.has(f"{extra_regions[idx]} Rune", world.player, runes_req))

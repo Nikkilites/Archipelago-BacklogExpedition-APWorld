@@ -112,6 +112,18 @@ class  MaxLocationsPerIsland(Range):
     range_end = 20
     default = 20
 
+class  RunesRequiredPerIsland(Range):
+    """
+    How many Runes each island will require to be unlocked.
+    A maximum of 5.
+    """
+
+    display_name = "Runes Required Per Island"
+
+    range_start = 1
+    range_end = 5
+    default = 3
+
 
 @dataclass
 class BExOptions(PerGameCommonOptions):
@@ -122,12 +134,13 @@ class BExOptions(PerGameCommonOptions):
     prioritized_locations: PrioritizedLocations
     limited_locations: LimitedLocations
     repeatable_locations: RepeatableLocations
+    runes_required: RunesRequiredPerIsland
 
 
 option_groups = [
     OptionGroup(
         "Game Options",
-        [MaxNumberOfIslands, MaxLocationsPerIsland, TreasuresToGoal],
+        [MaxNumberOfIslands, MaxLocationsPerIsland, TreasuresToGoal, RunesRequiredPerIsland],
     ),
     OptionGroup(
         "Game Additions",
