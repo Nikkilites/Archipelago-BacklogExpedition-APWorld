@@ -10,7 +10,7 @@ Additionally, you can choose to add other custom objectives to the islands, as w
 
 - Up to 400 custom locations possible
 - 4 types of custom locations. *(Backlog, Prioritized, Limited and Repeatable)*
-  - Games put in "Backlog" will each be placed on their own island.
+  - Games put in "Backlog" will each be placed on their own island, and have the amount of locations present as defined in your YAML
   - Extra objectives put in as Prioritized will appear randomly on each island, and will only show up the amount of times defined in your YAML.
   - Extra objectives put in as Limited will likewise appear randomly on each island. They will only show up the amount of times defined in your YAML, but are not guaranteed to show up.
   - Extra objectives put in as Repeatable will also appear randomly on each island, but can show up as many times as needed to fill up the islands depending on your YAML settings.
