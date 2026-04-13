@@ -17,6 +17,7 @@
 ### Required Software
 
 - Backlog Expedition from: [GitHub](https://github.com/Nikkilites/Archipelago-BacklogExpedition-Game/releases)
+  - Only tested on Win 10 & 11
 - Backlog Expedition AP World from: [GitHub](https://github.com/Nikkilites/Archipelago-BacklogExpedition-APWorld/releases)
 
 ### Installation and Connecting
