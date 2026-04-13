@@ -5,6 +5,7 @@
 Backlog Expedition is a custom meta-game where your backlog becomes an explorable world.
 
 You are Logmundr, a small Viking on a quest to raid an entire archipelago for treasure. To access each island, you must collect runes. Every island represents a game, divided into multiple parts (sessions, chapters, levels etc.) based on what it takes to beat it. These will become your locations to be found on each island. Once that game is beaten, the treasure of that Island is found!
+
 Additionally, you can choose to add other custom objectives to the islands, as well as create medley islands that replace a single game with these custom objectives.
 
 - Up to 400 custom locations possible
