@@ -24,6 +24,6 @@
 
 1. Download the game
 2. If you are on Win 11, run the .exe as administrator (The game does not work properly in Powershell, and that is the default of win 11. Please use Command Prompt)
-3. Connect to the server within the game
-4. Please note that, in this version you navigate with typing only
+4. Connect to the server within the game
+5. Please note that, in this version you navigate with typing only, and it looks the best in full screen!
 4. Enjoy!
