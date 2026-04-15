@@ -80,7 +80,7 @@ def create_main_objective_locations(world: BExWorld, regions: list) -> None:
     rnd_backlog_amount = getattr(world.multiworld.worlds[world.player].options, "randomized_backlog_amount", None)
 
     backlog_list = list(backlog_option.value) if backlog_option is not None else []
-    rnd_backlog_list = list(backlog_option.value) if rnd_backlog_option is not None else []
+    rnd_backlog_list = list(rnd_backlog_option.value) if rnd_backlog_option is not None else []
 
     # pick and shuffle backlog games
     world.random.shuffle(rnd_backlog_list)
