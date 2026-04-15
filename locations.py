@@ -76,11 +76,19 @@ def create_regular_locations(world: BExWorld) -> None:
 
 def create_main_objective_locations(world: BExWorld, regions: list) -> None:
     backlog_option = getattr(world.multiworld.worlds[world.player].options, "backlog", None)
-    backlog_list = list(backlog_option.value) if backlog_option is not None else []
+    rnd_backlog_option = getattr(world.multiworld.worlds[world.player].options, "random_backlog", None)
+    rnd_backlog_amount = getattr(world.multiworld.worlds[world.player].options, "random_backlog_amount", None)
 
-    world.random.shuffle(backlog_list)
+    backlog_list = list(backlog_option.value) if backlog_option is not None else []
+    rnd_backlog_list = list(backlog_option.value) if rnd_backlog_option is not None else []
+
+    # pick and shuffle backlog games
+    world.random.shuffle(rnd_backlog_list)
+    picked_backlog_list = backlog_list + rnd_backlog_list[:rnd_backlog_amount]
+    world.random.shuffle(picked_backlog_list)
+
     # Add backlog games
-    for region, picked_game in zip(regions, backlog_list):
+    for region, picked_game in zip(regions, picked_backlog_list):
         locations_to_add = []
         world.random.shuffle(monsters)
 
@@ -88,7 +96,7 @@ def create_main_objective_locations(world: BExWorld, regions: list) -> None:
             location = f"Slay the {monsters[i]} in {region.name}"
 
             locations_to_add.append(location)
-            create_hint(world, location, f"Complete a {picked_game.get('type')} of {picked_game.get('name')}")
+            create_hint(world, location, picked_game.get('name'))
 
         loc_w_ids = get_location_names_with_ids(locations_to_add)
         region.add_locations(loc_w_ids, BExLocation)
