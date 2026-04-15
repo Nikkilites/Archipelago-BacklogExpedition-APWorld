@@ -1,4 +1,5 @@
 import logging
+from Options import OptionError
 from collections.abc import Mapping
 from typing import Any, Dict
 
@@ -30,31 +31,52 @@ class BExWorld(World):
         self.hint_data: Dict[int, str] = {}
 
     def generate_early(self) -> None:
-        # Ensure number_of_islands is big enough to hold selected amount of games defined by randomized_backlog_amount and amount of games put in prioritized_backlog
-        if self.options.number_of_islands < (len(self.options.prioritized_backlog) + self.options.randomized_backlog_amount):
-            if self.options.number_of_islands < len(self.options.prioritized_backlog):
-                raise options.OptionError(f"Error: Your selected number_of_islands was smaller than required for your amount of backlog games. Please raise the number of islands or select fewer backlog games")
-            else:
-                self.options.randomized_backlog_amount = self.options.number_of_islands - len(self.options.prioritized_backlog)
-                logging.warning(f"Warning: Your selected number_of_islands was smaller than required for selected backlog games. randomized_backlog_amount was set to {self.options.randomized_backlog_amount}.")
+        islands = self.options.number_of_islands
+        prio_len = len(self.options.prioritized_backlog.value)
+        rand_len = len(self.options.randomized_backlog.value)
+
+        # Throw exception if number_of_islands is too small to hold amount of games in prioritized_backlog
+        if islands < prio_len:
+            raise OptionError(
+                "Error: Your number_of_islands is smaller than required for your amount of prioritized backlog games. "
+                "Please check your YAML, and increase your number of islands or select fewer prioritized backlog games"
+            )
+
+        # Ensure there are enough empty islands to hold selected amount of randomized games defined by randomized_backlog_amount
+        if islands < prio_len + self.options.randomized_backlog_amount:
+            new_amount = islands - prio_len
+            self.options.randomized_backlog_amount.value = new_amount
+            logging.warning(
+                "Warning: Your selected number_of_islands was smaller than required for selected backlog games. "
+                f"randomized_backlog_amount was set to {new_amount}. Please check your YAML."
+            )
+        
+        # Ensure randomized_backlog_amount is not higher than amount of games in randomized_backlog
+        if self.options.randomized_backlog_amount > rand_len:
+            self.options.randomized_backlog_amount.value = rand_len
+            logging.warning(
+                "Warning: Your selected randomized_backlog_amount was higher than the amount of games in your randomized_backlog. "
+                f"randomized_backlog_amount was set to {rand_len}. Please check your YAML."
+            )
 
         # Ensure backlog games do not have more than 20 locations each
-        backlog = [game for game in self.options.prioritized_backlog] + [game for game in self.options.randomized_backlog_amount]
-
+        backlog = self.options.prioritized_backlog.value + self.options.randomized_backlog.value
         for game in backlog:
-            if game.get("count") > 20:
+            count = game.get("count", 0)
+            if count > 20:
                 game["count"] = 20
-                logging.warning(f"Warning: Your backlog game {game.get("name")} had more locations than 20. Number was therefore lowered. Please check your YAML.")
+                logging.warning(
+                    f'Warning: Your backlog game {game.get("name")} had more locations than 20. '
+                    'Number was therefore lowered to 20. Please check your YAML.'
+                )
 
-        # Ensure randomized_backlog_amount is not higher than amount of games in randomized_backlog
-        if self.options.randomized_backlog_amount > len(self.options.randomized_backlog):
-            self.options.randomized_backlog_amount = len(self.options.randomized_backlog)
-            logging.warning(f"Warning: Your selected randomized_backlog_amount was higher than the amount of games in your randomized_backlog option. randomized_backlog_amount was set to {len(self.options.randomized_backlog)}.")
-
-        # Ensure treasures_to_goal is not higher than number_of_islands
-        if self.options.treasures_to_goal > self.options.number_of_islands:
-            self.options.treasures_to_goal = self.options.number_of_islands
-            logging.warning(f"Warning: Your treasures_to_goal was higher than your number_of_islands. Number was therefore lowered. Please lower your treasures_to_goal to be less than or equal to number_of_islands.")
+        # Ensure beaten_to_goal is not higher than number_of_islands
+        if self.options.beaten_to_goal > islands:
+            self.options.beaten_to_goal.value = islands.value
+            logging.warning(
+                f"Warning: Your beaten_to_goal was higher than your number_of_islands. "
+                "Number was therefore lowered. Please check your YAML and lower your beaten_to_goal to be less than or equal to number_of_islands."
+            )
         
         # Warning for having too many prioritized locations than what is able to be filled happens in locations.py
         
