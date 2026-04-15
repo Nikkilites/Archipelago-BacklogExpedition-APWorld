@@ -13,15 +13,13 @@ class Backlog(OptionList):
 
     display_name = "Backlog"
     default = [
-        {"name": "Hollow Knight", "type": "Area", "count": 12},
-        {"name": "Celeste", "type": "chapter", "count": 9},
-        {"name": "Dredge", "type": "Part", "count": 20},
+        {"name": "Complete an area of Hollow Knight", "count": 12},
+        {"name": "Complete a chapter of Celeste", "count": 9},
     ]
 
     schema = Schema([
         {
             "name": And(str, len),
-            "type": And(str, len),
             "count": And(int, lambda x: x > 0),
         }
     ])
@@ -29,13 +27,13 @@ class Backlog(OptionList):
 class PrioritizedLocations(OptionList):
     """
     Objectives that will be used to fill up islands.
-    These only exist a limited amount of times, and will be prioritized over other locations (Except Backlog).
+    These only exist a limited amount of times, and will be prioritized over other locations (Except Backlog locations).
     """
 
-    display_name = "Limited Locations"
+    display_name = "Prioritized Locations"
     default = [
         {"name": "Play a level of Train Valley", "count": 10},
-        {"name": "Shinyhunt a Pikachu", "count": 1},
+        {"name": "Find a shiny Pikachu in Pokemon Sword", "count": 1},
     ]
 
     schema = Schema([
@@ -53,8 +51,9 @@ class LimitedLocations(OptionList):
 
     display_name = "Limited Locations"
     default = [
-        {"name": "Play a level of Train Valley", "count": 10},
-        {"name": "Shinyhunt a Pikachu", "count": 1},
+        {"name": "Play a day of Stardew Valley", "count": 10},
+        {"name": "Find a shiny Eevee in Pokemon Violet", "count": 1},
+        {"name": "Try a new game", "count": 1},
     ]
 
     schema = Schema([
