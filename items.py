@@ -56,7 +56,7 @@ def create_all_items(world: BExWorld) -> None:
     itempool = []
 
     runes_req = getattr(world.multiworld.worlds[world.player].options, 'runes_required', None)
-    islands = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
+    islands = getattr(world.multiworld.worlds[world.player].options, 'number_of_islands', None)
     if islands is not None:
         for i in range(islands - 1):
             for num in range(runes_req):

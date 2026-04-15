@@ -8,7 +8,7 @@ class PrioritizedBacklog(OptionList):
     """
     Games that will be your goal on an island.
     These games will always be included, and generate as many locations as defined here.
-    Maximum of 20 games allowed, with a maximum of 20 parts per game.
+    Maximum of 20 games allowed, with a maximum of 20 locations per game.
     """
 
     display_name = "Prioritized Backlog"
@@ -24,14 +24,14 @@ class PrioritizedBacklog(OptionList):
         }
     ])
 
-class RandomBacklog(OptionList):
+class RandomizedBacklog(OptionList):
     """
     Games that will be your goal on an island.
-    These will will be randomly picked, based on your "Number of Random Backlog Games" option, and will generate as many locations as defined here.
-    You can put an unlimited amount of games here, with a maximum of 20 parts per game.
+    These will will be randomly picked, based on your "Randomized Backlog Amount" option, and will generate as many locations as defined here.
+    You can put an unlimited amount of games here, with a maximum of 20 locations per game.
     """
 
-    display_name = "Random Backlog"
+    display_name = "Randomized Backlog"
     default = [
         {"name": "Finish a kingdom in Super Mario Odyssey", "count": 15},
         {"name": "Beat a boss in Cuphead", "count": 19},
@@ -95,7 +95,7 @@ class RepeatableLocations(OptionList):
 class TreasuresToGoal(Range):
     """
     How many Treasures you need to find to Goal.
-    On each island you will find a treasure, so this number can only go as high as your "Max Number Of Islands" option.
+    On each island you will find a treasure, so this number can only go as high as your "Number Of Islands" option.
     A maximum of 20, and minimum of 1.
     """
 
@@ -105,34 +105,34 @@ class TreasuresToGoal(Range):
     range_end = 20
     default = 3
 
-class  NumberOfRandomBacklogGames(Range):
+class  RandomizedBacklogAmount(Range):
     """
     How many random backlog games your world will have, in addition to your prioritized backlog games.
-    This number cannot go higher than the amount of games in your "Random Backlog" option
+    This number cannot go higher than the amount of games in your "Randomized Backlog" option
     A maximum of 20.
     """
 
-    display_name = "Number Of Random Backlog Games"
+    display_name = "Randomized Backlog Amount"
 
     range_start = 0
     range_end = 20
     default = 1
 
-class  MaxNumberOfIslands(Range):
+class  NumberOfIslands(Range):
     """
     How many Islands your world will have.
-    Make sure that this number is either equal to or higher than the amount of games in your "Prioritized Backlog" option + your "Number of Random Backlog Games" option.
+    Make sure that this number is either equal to or higher than the amount of games in your "Prioritized Backlog" option + your "Randomized Backlog Amount" option.
     An Island that is not filled with a Backlog Game will instead become a medley island, filled with random objectives from the other location lists.
     A maximum of 20, and minimum of 1.
     """
 
-    display_name = "Max Number Of Islands"
+    display_name = "Number Of Islands"
 
     range_start = 1
     range_end = 20
     default = 4
 
-class  MaxLocationsPerIsland(Range):
+class  LocationsPerIsland(Range):
     """
     How many Locations each island should try to be filled with.
     If no repeatable locations are added, generation will fill up as much as possible.
@@ -140,19 +140,19 @@ class  MaxLocationsPerIsland(Range):
     A maximum of 20.
     """
 
-    display_name = "Max Locations Per Island"
+    display_name = "Locations Per Island"
 
     range_start = 0
     range_end = 20
     default = 10
 
-class  RunesRequiredPerIsland(Range):
+class  RunesRequired(Range):
     """
     How many Runes each island will require to be unlocked.
     A maximum of 5.
     """
 
-    display_name = "Runes Required Per Island"
+    display_name = "Runes Required"
 
     range_start = 1
     range_end = 5
@@ -161,25 +161,25 @@ class  RunesRequiredPerIsland(Range):
 
 @dataclass
 class BExOptions(PerGameCommonOptions):
-    max_number_of_islands: MaxNumberOfIslands
-    max_locations_per_island: MaxLocationsPerIsland
+    number_of_islands: NumberOfIslands
+    locations_per_island: LocationsPerIsland
     treasures_to_goal: TreasuresToGoal
-    random_backlog_amount: NumberOfRandomBacklogGames
-    backlog: PrioritizedBacklog
-    random_backlog: RandomBacklog
+    randomized_backlog_amount: RandomizedBacklogAmount
+    prioritized_backlog: PrioritizedBacklog
+    randomized_backlog: RandomizedBacklog
     prioritized_locations: PrioritizedLocations
     limited_locations: LimitedLocations
     repeatable_locations: RepeatableLocations
-    runes_required: RunesRequiredPerIsland
+    runes_required: RunesRequired
 
 
 option_groups = [
     OptionGroup(
         "Game Options",
-        [MaxNumberOfIslands, MaxLocationsPerIsland, TreasuresToGoal, NumberOfRandomBacklogGames, RunesRequiredPerIsland],
+        [NumberOfIslands, LocationsPerIsland, TreasuresToGoal, RandomizedBacklogAmount, RunesRequired],
     ),
     OptionGroup(
         "Game Additions",
-        [PrioritizedBacklog, RandomBacklog, PrioritizedLocations, LimitedLocations, RepeatableLocations],
+        [PrioritizedBacklog, RandomizedBacklog, PrioritizedLocations, LimitedLocations, RepeatableLocations],
     ),
 ]

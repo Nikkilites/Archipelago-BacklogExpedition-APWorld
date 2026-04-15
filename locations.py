@@ -42,7 +42,7 @@ def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | No
 def get_regions(world: BExWorld):
     regions = [world.get_region("Starting Island")]
 
-    option = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
+    option = getattr(world.multiworld.worlds[world.player].options, 'number_of_islands', None)
     if option is not None:
         for i in range(option - 1):
             regions.append(world.get_region(f"{extra_regions[i]} Island"))
@@ -75,9 +75,9 @@ def create_regular_locations(world: BExWorld) -> None:
 
 
 def create_main_objective_locations(world: BExWorld, regions: list) -> None:
-    backlog_option = getattr(world.multiworld.worlds[world.player].options, "backlog", None)
-    rnd_backlog_option = getattr(world.multiworld.worlds[world.player].options, "random_backlog", None)
-    rnd_backlog_amount = getattr(world.multiworld.worlds[world.player].options, "random_backlog_amount", None)
+    backlog_option = getattr(world.multiworld.worlds[world.player].options, "prioritized_backlog", None)
+    rnd_backlog_option = getattr(world.multiworld.worlds[world.player].options, "randomized_backlog", None)
+    rnd_backlog_amount = getattr(world.multiworld.worlds[world.player].options, "randomized_backlog_amount", None)
 
     backlog_list = list(backlog_option.value) if backlog_option is not None else []
     rnd_backlog_list = list(backlog_option.value) if rnd_backlog_option is not None else []
