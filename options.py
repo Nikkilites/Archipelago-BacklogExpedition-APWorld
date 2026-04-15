@@ -163,7 +163,7 @@ class  RunesRequired(Range):
 class BExOptions(PerGameCommonOptions):
     number_of_islands: NumberOfIslands
     locations_per_island: LocationsPerIsland
-    treasures_to_goal: TreasuresToGoal
+    beaten_to_goal: TreasuresToGoal
     randomized_backlog_amount: RandomizedBacklogAmount
     prioritized_backlog: PrioritizedBacklog
     randomized_backlog: RandomizedBacklog
