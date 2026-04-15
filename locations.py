@@ -5,6 +5,7 @@ from copy import deepcopy
 
 from BaseClasses import ItemClassification, Location
 
+import logging
 from . import items
 from .data import monsters, extra_regions, mcguffins, containers, container_modifiers
 
@@ -141,14 +142,11 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
     objectives_needed = (len(regions) * max_locations) - existing_locations
 
     # Create Objectives
-    objectives = []
+    objectives = [objective.get("name") for objective in prio_list for _ in range(int(objective.get("count", 0)))]
 
-    for objective in prio_list:
-        if len(objectives) >= objectives_needed:
-            break
-        while int(objective.get("count")) > 0:
-            objectives.append(objective.get("name"))
-            objective["count"] -= 1
+    if len(objectives) > objectives_needed:
+        objectives = objectives[:objectives_needed]
+        logging.warning(f"Warning: Your amount of prioritized_locations was larger than could be filled into your islands based on your options. Some have been removed. Please lower your amount of prioritized_locations, or raise your number_of_islands or locations_per_island to keep them all to ensure that they will be included")
     
     while (len(objectives) < objectives_needed) and (limited_list or repeatable_list):
         objectives.append(get_random_objective(world, limited_list, repeatable_list))
