@@ -146,7 +146,10 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
 
     if len(objectives) > objectives_needed:
         objectives = objectives[:objectives_needed]
-        logging.warning(f"Warning: Your amount of prioritized_locations was larger than could be filled into your islands based on your options. Some have been removed. Please lower your amount of prioritized_locations, or raise your number_of_islands or locations_per_island to keep them all to ensure that they will be included")
+        logging.warning(
+            "Warning: Your amount of prioritized_locations was larger than could be filled into your islands based on your options. "
+            "Some have been removed. Please lower your amount of prioritized_locations, or raise your number_of_islands or locations_per_island to keep them all to ensure that they will be included"
+        )
     
     while (len(objectives) < objectives_needed) and (limited_list or repeatable_list):
         objectives.append(get_random_objective(world, limited_list, repeatable_list))
