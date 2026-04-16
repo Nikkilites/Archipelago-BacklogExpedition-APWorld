@@ -13,7 +13,7 @@ def set_all_rules(world: BExWorld) -> None:
 
 def set_completion_condition(world: BExWorld) -> None:
     mcguffins_available = []
-    islands = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
+    islands = getattr(world.multiworld.worlds[world.player].options, 'number_of_islands', None)
     if islands is not None:
         for i in range(islands):
             mcguffins_available.append(mcguffins[i])

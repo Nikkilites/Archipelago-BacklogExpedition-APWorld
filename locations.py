@@ -5,6 +5,7 @@ from copy import deepcopy
 
 from BaseClasses import ItemClassification, Location
 
+import logging
 from . import items
 from .data import monsters, extra_regions, mcguffins, containers, container_modifiers
 
@@ -42,7 +43,7 @@ def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | No
 def get_regions(world: BExWorld):
     regions = [world.get_region("Starting Island")]
 
-    option = getattr(world.multiworld.worlds[world.player].options, 'islands', None)
+    option = getattr(world.multiworld.worlds[world.player].options, 'number_of_islands', None)
     if option is not None:
         for i in range(option - 1):
             regions.append(world.get_region(f"{extra_regions[i]} Island"))
@@ -75,12 +76,20 @@ def create_regular_locations(world: BExWorld) -> None:
 
 
 def create_main_objective_locations(world: BExWorld, regions: list) -> None:
-    backlog_option = getattr(world.multiworld.worlds[world.player].options, "backlog", None)
-    backlog_list = list(backlog_option.value) if backlog_option is not None else []
+    backlog_option = getattr(world.multiworld.worlds[world.player].options, "prioritized_backlog", None)
+    rnd_backlog_option = getattr(world.multiworld.worlds[world.player].options, "randomized_backlog", None)
+    rnd_backlog_amount = getattr(world.multiworld.worlds[world.player].options, "randomized_backlog_amount", None)
 
-    world.random.shuffle(backlog_list)
+    backlog_list = list(backlog_option.value) if backlog_option is not None else []
+    rnd_backlog_list = list(rnd_backlog_option.value) if rnd_backlog_option is not None else []
+
+    # pick and shuffle backlog games
+    world.random.shuffle(rnd_backlog_list)
+    picked_backlog_list = backlog_list + rnd_backlog_list[:rnd_backlog_amount]
+    world.random.shuffle(picked_backlog_list)
+
     # Add backlog games
-    for region, picked_game in zip(regions, backlog_list):
+    for region, picked_game in zip(regions, picked_backlog_list):
         locations_to_add = []
         world.random.shuffle(monsters)
 
@@ -88,7 +97,7 @@ def create_main_objective_locations(world: BExWorld, regions: list) -> None:
             location = f"Slay the {monsters[i]} in {region.name}"
 
             locations_to_add.append(location)
-            create_hint(world, location, f"Complete a {picked_game.get('type')} of {picked_game.get('name')}")
+            create_hint(world, location, picked_game.get('name'))
 
         loc_w_ids = get_location_names_with_ids(locations_to_add)
         region.add_locations(loc_w_ids, BExLocation)
@@ -133,14 +142,14 @@ def create_secondary_objective_locations(world: BExWorld, regions: list) -> None
     objectives_needed = (len(regions) * max_locations) - existing_locations
 
     # Create Objectives
-    objectives = []
+    objectives = [objective.get("name") for objective in prio_list for _ in range(int(objective.get("count", 0)))]
 
-    for objective in prio_list:
-        if len(objectives) >= objectives_needed:
-            break
-        while int(objective.get("count")) > 0:
-            objectives.append(objective.get("name"))
-            objective["count"] -= 1
+    if len(objectives) > objectives_needed:
+        objectives = objectives[:objectives_needed]
+        logging.warning(
+            "Warning: Your amount of prioritized_locations was larger than could be filled into your islands based on your options. "
+            "Some have been removed. Please lower your amount of prioritized_locations, or raise your number_of_islands or locations_per_island to keep them all to ensure that they will be included"
+        )
     
     while (len(objectives) < objectives_needed) and (limited_list or repeatable_list):
         objectives.append(get_random_objective(world, limited_list, repeatable_list))
