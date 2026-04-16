@@ -27,7 +27,7 @@ class PrioritizedBacklog(OptionList):
 class RandomizedBacklog(OptionList):
     """
     Games that will be your goal on an island.
-    These will will be randomly picked, based on your "Randomized Backlog Amount" option, and will generate as many locations as defined here.
+    These games will be randomly picked, based on your "Randomized Backlog Amount" option, and will generate as many locations as defined here.
     You can put an unlimited amount of games here, with a maximum of 20 locations per game.
     """
 
