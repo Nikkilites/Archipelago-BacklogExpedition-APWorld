@@ -111,12 +111,11 @@ Which of the 3 options you choose for your extra locations, depends entirely on 
 
 **Here are a couple of ideas for what you could put in here**
 * Runs in runbased games like Roguelikes or Survivor likes
-* Matches in ranked games
 * Achievements in games you wish to 100% complete
 * "Try this game" locations for games you don't want to commit to.
 * "Beat this game" for very short games you don't necessarily want to give you treasure on an island
 * Winning challenges, medals or stars in level based games
-* Bite sized goals in ongoing long games/endless games
+* Bite sized goals in ongoing long games/endless games like quests, dailies, ranked matches etc.
 
 ## Notes on accountability
 When playing backlog games, you are, unlike with regular archipelago games, playing games unknown to you.
