@@ -48,8 +48,11 @@ A medley island is an Island where doing everything on it is required to get the
 ### Common ways of adding full games to your YAML
 The most common way to add a game to your YAML would be to add it to the __Prioritized Backlog option__ like so:
 `prioritized_backlog:`
+
 `  [`
+
 `    {'name': 'Complete a chapter of Celeste', 'count': 9}`
+
 `  ]`
 This option makes sure that this game WILL show up at some point during your Async, and will be available in it's entirety on one island.
 
