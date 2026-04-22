@@ -47,29 +47,29 @@ A medley island is an Island where doing everything on it is required to get the
 
 ### Common ways of adding full games to your YAML
 The most common way to add a game to your YAML would be to add it to the __Prioritized Backlog option__ like so:
-`prioritized_backlog:
-  [
-    {'name': 'Complete a chapter of Celeste', 'count': 9}
-  ]`
+`prioritized_backlog:`
+`  [`
+`    {'name': 'Complete a chapter of Celeste', 'count': 9}`
+`  ]`
 This option makes sure that this game WILL show up at some point during your Async, and will be available in it's entirety on one island.
 
 Another option is to use the __Randomized Backlog option__, where you put games in that you want to be randomized. If you for example were interested in 10 different games, but only had space for 5 in your YAML due to some restriction, you'd put them here like so:
-`randomized_backlog:
-  [
-    {'name': 'Complete a chapter of Celeste', 'count': 9},
-    {'name': 'Complete an area of Hollow Knight', 'count': 12},
-    {'name': 'Finish a kingdom in Super Mario Odyssey', 'count': 15}, 
-    {'name': 'Beat a boss in Cuphead', 'count': 19}
-  ]`
+`randomized_backlog:`
+`  [`
+`    {'name': 'Complete a chapter of Celeste', 'count': 9},`
+`    {'name': 'Complete an area of Hollow Knight', 'count': 12},`
+`    {'name': 'Finish a kingdom in Super Mario Odyssey', 'count': 15}, `
+`    {'name': 'Beat a boss in Cuphead', 'count': 19}`
+`  ]`
 Other than being randomly picked, they function the exact same way as games put into the __Prioritized Backlog option__.
 To choose how many you want to be picked out, you set that number in your __Randomized Backlog Amount option__.
 
 Your last option for adding a full game to your YAML, is to use the __Prioritized Locations option__.
 In both of the previous options, once your game is unlocked, you will be able to play it from start to finish and send off your locations as you go. Sometimes you might not want that, for example if the game is meant to be played in short bursts. In these situations you can choose to add them to the Prioritized Locations like so:
-`prioritized_locations:
-  [
-    {'name': 'Beat a boss in Cuphead', 'count': 19}
-  ]`
+`prioritized_locations:`
+`  [`
+`    {'name': 'Beat a boss in Cuphead', 'count': 19}`
+`  ]`
 This will make sure that all the locations needed to beat this game shows up in the Async, but they won't all show up at once, and will instead be spread across multiple islands where there's space.
 The only thing to note about doing this, is that unless these locations are put on medley islands, they will not be required to goal your slot.
 
@@ -77,22 +77,22 @@ The only thing to note about doing this, is that unless these locations are put 
 So you have a game you want to include in your YAML, but it is *so long* that you'd find it too big to put in one island by itself.
 You can deal with this issue two ways.
 Your first option is to include this game in your __Prioritized Locations option__ as described above. This will make sure that the whole game will be included in the async, but instead of all being dumped at you at once, it will become a game that you continuously return to throughout the Async, by being randomly scattered across however many islands you choose to have in your yaml per your Islands option. This also allows you to have a much higher location count than 20! You can do this like so:
-`prioritized_locations:
-  [
-    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 120}
-  ]`
+`prioritized_locations:`
+`  [`
+`    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 120}`
+`  ]`
 This way, you could even choose to only play this game and make it required to goal, by including no games in the two Backlog options at all, so that it will be put on Medley islands, that are required to goal.
 
 Another way to deal with long games is choosing to split it into multiple islands like so:
-`prioritized_backlog:
-  [
-    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},
-    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},
-    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},
-    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},
-    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},
-    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20}
-  ]`
+`prioritized_backlog:`
+`  [`
+`    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},`
+`    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},`
+`    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},`
+`    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},`
+`    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20},`
+`    {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20}`
+`  ]`
 It's no issue for BEx at all to handle inputs that are the exact same.
 The thing to note here is to be aware that you might end up playing half a game in the beginning of the async, and then playing the other half a long time after in the end of the Async, so you have to be okay with that possibility.
 
