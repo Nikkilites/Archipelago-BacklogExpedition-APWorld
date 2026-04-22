@@ -103,7 +103,7 @@ prioritized_backlog:
     {'name': 'Complete a shrine in Zelda: Breath of the Wild', 'count': 20}
   ]
 ```
-It's no issue for BEx at all to handle inputs that are the exact same.
+It's no issue for BEx to handle inputs that are the exact same.
 The thing to note here is to be aware that you might end up playing half a game in the beginning of the async, and then playing the other half a long time after in the end of the Async, so you have to be okay with that possibility.
 
 ### Extra locations and inspiration:
@@ -118,7 +118,7 @@ Which of the 3 options you choose for your extra locations, depends entirely on 
 * Winning challenges, medals or stars in level based games
 * Bite sized goals in ongoing long games/endless games
 
-## Morale points
+## Notes on accountability
 When playing backlog games, you are, unlike with regular archipelago games, playing games unknown to you.
 There's a high chance you at some point will end up in a situation where a game is too difficult, a game is too boring, a game causes you physical or emotional distress, a game is longer than you thought it would be or you no longer have interest in a game you had initially picked. In these cases, i suggest you do what feels best, be it swapping the game out for something else or clicking the locations off regardless. Abandoning a game for whatever reason is a totally valid reason to click those locations. The game got off your backlog in the end either way, which is the goal!
 
