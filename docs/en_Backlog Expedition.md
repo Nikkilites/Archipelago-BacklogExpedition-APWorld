@@ -45,6 +45,11 @@ A medley island is an Island where doing everything on it is required to get the
 
 ## Setting up your YAML
 
+### Attention!
+Please note that options should never be deleted from the YAML!
+If options are deleted, you risk your seed generating with default YAML options, including example games.
+If you don't need certain options, please leave them empty or at 0 to make sure this does not happen.
+
 ### Common ways of adding full games to your YAML
 The most common way to add a game to your YAML would be to add it to the __Prioritized Backlog option__ like so:
 ```
