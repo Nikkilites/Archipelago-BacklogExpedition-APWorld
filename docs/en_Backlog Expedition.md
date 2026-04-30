@@ -122,6 +122,10 @@ Which of the 3 options you choose for your extra locations, depends entirely on 
 * Winning challenges, medals or stars in level based games
 * Bite sized goals in ongoing long games/endless games like quests, dailies, ranked matches etc.
 
+### Dealing with spoilers
+To setup a YAML that works for any game sometimes requires some research or another person with prior knowledge on the game. Sometimes, we don't have that, or refuse to look it up ourselves due to the risk of spoilers.
+AsaraBaenre and I (Nikkilite) have made a community spreadsheet where we can all share our suggestions on how to divide games. If that sounds useful to you, you can find it [here!](https://docs.google.com/spreadsheets/d/1StOhFUO3ix--mWpj-CoIzmT7p0GhiGwoAU4qsTIA4WM/edit?gid=0#gid=0)
+
 ## Notes on accountability
 When playing backlog games, you are, unlike with regular archipelago games, playing games unknown to you.
 There's a high chance you at some point will end up in a situation where a game is too difficult, a game is too boring, a game causes you physical or emotional distress, a game is longer than you thought it would be or you no longer have interest in a game you had initially picked. In these cases, i suggest you do what feels best, be it swapping the game out for something else or clicking the locations off regardless. Abandoning a game for whatever reason is a totally valid reason to click those locations. The game got off your backlog in the end either way, which is the goal!
