@@ -123,8 +123,8 @@ Which of the 3 options you choose for your extra locations, depends entirely on 
 * Bite sized goals in ongoing long games/endless games like quests, dailies, ranked matches etc.
 
 ### Dealing with spoilers
-To setup a YAML that works for any game sometimes requires some research or another person with prior knowledge on the game. Sometimes, we don't have that, or refuse to look it up ourselves due to the risk of spoilers.
-AsaraBaenre and I (Nikkilite) have made a community spreadsheet where we can all share our suggestions on how to divide games. If that sounds useful to you, you can find it [here!](https://docs.google.com/spreadsheets/d/1StOhFUO3ix--mWpj-CoIzmT7p0GhiGwoAU4qsTIA4WM/edit?gid=0#gid=0)
+Setting up a YAML that works well for a game can sometimes require extra research or advice from someone already familiar with it. But not everyone has that knowledge available — and some players prefer to avoid looking things up themselves to reduce the risk of spoilers.
+To help with that, AsaraBaenre and I (Nikkilite) have created a community spreadsheet where anyone can share suggestions for how games can be divided. If that sounds useful to you, you can find it [here!](https://docs.google.com/spreadsheets/d/1StOhFUO3ix--mWpj-CoIzmT7p0GhiGwoAU4qsTIA4WM/edit?gid=0#gid=0)
 
 ## Notes on accountability
 When playing backlog games, you are, unlike with regular archipelago games, playing games unknown to you.
