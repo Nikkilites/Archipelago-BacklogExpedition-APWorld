@@ -34,12 +34,21 @@ class BExWorld(World):
         islands = self.options.number_of_islands
         prio_len = len(self.options.prioritized_backlog.value)
         rand_len = len(self.options.randomized_backlog.value)
+        force_start_content = self.options.force_starting_island_content
 
         # Throw exception if number_of_islands is too small to hold amount of games in prioritized_backlog
         if islands < prio_len:
             raise OptionError(
                 "Error: Your number_of_islands is smaller than required for your amount of prioritized backlog games. "
                 "Please check your YAML, and increase your number of islands or select fewer prioritized backlog games"
+            )
+        
+        # Ensure force_starting_island_content is false, if no backlog games were put in prioritized_backlog
+        if (force_start_content == True) & (prio_len <= 0):
+            logging.warning(
+                "Error: You need to have an entry in your prioritized backlog games to force the Starting Island content"
+                "force_starting_island_content was set to false"
+                "If you want to force the Starting Island content, please check your YAML and add a game to your prioritized backlog games"
             )
 
         # Ensure there are enough empty islands to hold selected amount of randomized games defined by randomized_backlog_amount
