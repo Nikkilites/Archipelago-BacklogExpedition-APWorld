@@ -173,12 +173,24 @@ class ForceStartingIslandContent(Toggle):
     display_name = "Force Starting Island Content"
     default = False
 
+class HintShopCost(Range):
+    """
+    The percentage of your worlds trash you must collect to gain a hint from the hint shop
+    At 0, the hint shop will be disabled completely
+    """
+
+    display_name = "Hint Shop Cost"
+
+    range_start = 0
+    range_end = 100
+    default = 20
+
 
 @dataclass
 class BExOptions(PerGameCommonOptions):
     number_of_islands: NumberOfIslands
     locations_per_island: LocationsPerIsland
-    beaten_to_goal: TreasuresToGoal
+    treasures_to_goal: TreasuresToGoal
     randomized_backlog_amount: RandomizedBacklogAmount
     prioritized_backlog: PrioritizedBacklog
     randomized_backlog: RandomizedBacklog
@@ -188,6 +200,7 @@ class BExOptions(PerGameCommonOptions):
     runes_required: RunesRequired
     random_island_order: RandomIslandOrder
     force_starting_island_content: ForceStartingIslandContent
+    hint_shop_cost: HintShopCost
 
 
 option_groups = [
@@ -197,7 +210,7 @@ option_groups = [
     ),
     OptionGroup(
         "Advanced Options",
-        [RandomIslandOrder, ForceStartingIslandContent],
+        [RandomIslandOrder, ForceStartingIslandContent, HintShopCost],
     ),
     OptionGroup(
         "Game Additions",

@@ -80,12 +80,12 @@ class BExWorld(World):
                     'Number was therefore lowered to 25. Please check your YAML.'
                 )
 
-        # Ensure beaten_to_goal is not higher than number_of_islands
-        if self.options.beaten_to_goal > islands:
-            self.options.beaten_to_goal.value = islands.value
+        # Ensure treasures_to_goal is not higher than number_of_islands
+        if self.options.treasures_to_goal > islands:
+            self.options.treasures_to_goal.value = islands.value
             logging.warning(
-                f"Warning: Your beaten_to_goal was higher than your number_of_islands. "
-                "Number was therefore lowered. Please check your YAML and lower your beaten_to_goal to be less than or equal to number_of_islands."
+                f"Warning: Your treasures_to_goal was higher than your number_of_islands. "
+                "Number was therefore lowered. Please check your YAML and lower your treasures_to_goal to be less than or equal to number_of_islands."
             )
         
         # Warning for having too many prioritized locations than what is able to be filled happens in locations.py
@@ -107,7 +107,7 @@ class BExWorld(World):
         return items.get_random_filler_item_name(self)
 
     def fill_slot_data(self) -> Mapping[str, Any]:
-        slot_data = self.options.as_dict("beaten_to_goal", "runes_required")
+        slot_data = self.options.as_dict("treasures_to_goal", "runes_required", "hint_shop_cost")
         slot_data["hint_data"] = self.hint_data
         return slot_data
     
