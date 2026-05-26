@@ -45,7 +45,7 @@ class BExWorld(World):
         
         # Ensure force_starting_island_content is false, if no backlog games were put in prioritized_backlog
         if (force_start_content == True) & (prio_len <= 0):
-            self.options.force_starting_island_content = False
+            self.options.force_starting_island_content.value = False
             logging.warning(
                 "Error: You need to have an entry in your prioritized backlog games to force the Starting Island content"
                 "force_starting_island_content was set to false"
