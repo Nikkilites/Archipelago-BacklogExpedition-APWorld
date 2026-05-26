@@ -85,6 +85,13 @@ def create_main_objective_locations(world: BExWorld, regions: list) -> None:
 
     # Create copy of regions to not mess with actual order
     regions_copy = regions.copy()
+
+    # Preset staring island content before randomization if option is toggled
+    if world.options.force_starting_island_content:
+        add_backlog_game_to_region(world, regions_copy[0], backlog_list[0])
+        regions_copy.remove[0]
+        backlog_list.remove[0]
+
     # Pick and shuffle backlog games
     world.random.shuffle(rnd_backlog_list)
     picked_backlog_list = backlog_list + rnd_backlog_list[:rnd_backlog_amount]
