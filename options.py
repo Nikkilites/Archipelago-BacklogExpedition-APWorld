@@ -149,13 +149,13 @@ class  LocationsPerIsland(Range):
 class  RunesRequired(Range):
     """
     How many Runes each island will require to be unlocked.
-    A maximum of 10.
+    A maximum of 5.
     """
 
     display_name = "Runes Required"
 
     range_start = 1
-    range_end = 10
+    range_end = 5
     default = 2
 
 class RandomIslandOrder(Toggle):
