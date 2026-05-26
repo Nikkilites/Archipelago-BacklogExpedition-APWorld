@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from schema import Schema, And
 
-from Options import OptionGroup, PerGameCommonOptions, Range, OptionList
+from Options import Choice, Toggle, OptionGroup, PerGameCommonOptions, Range, OptionList
 
 
 class PrioritizedBacklog(OptionList):
@@ -158,6 +158,14 @@ class  RunesRequired(Range):
     range_end = 5
     default = 2
 
+class RandomIslandOrder(Toggle):
+    """
+    If True: Logically, any island could be unlocked at any time
+    If False: Logically, islands should be unlocked in order.
+    """
+    display_name = "Random Island Order"
+    default = True
+
 
 @dataclass
 class BExOptions(PerGameCommonOptions):
@@ -171,12 +179,13 @@ class BExOptions(PerGameCommonOptions):
     limited_locations: LimitedLocations
     repeatable_locations: RepeatableLocations
     runes_required: RunesRequired
+    random_island_order: RandomIslandOrder
 
 
 option_groups = [
     OptionGroup(
         "Game Options",
-        [NumberOfIslands, LocationsPerIsland, TreasuresToGoal, RandomizedBacklogAmount, RunesRequired],
+        [NumberOfIslands, LocationsPerIsland, TreasuresToGoal, RandomizedBacklogAmount, RunesRequired, RandomIslandOrder],
     ),
     OptionGroup(
         "Game Additions",
