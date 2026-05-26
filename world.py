@@ -59,15 +59,15 @@ class BExWorld(World):
                 f"randomized_backlog_amount was set to {rand_len}. Please check your YAML."
             )
 
-        # Ensure backlog games do not have more than 20 locations each
+        # Ensure backlog games do not have more than 25 locations each
         backlog = self.options.prioritized_backlog.value + self.options.randomized_backlog.value
         for game in backlog:
             count = game.get("count", 0)
-            if count > 20:
-                game["count"] = 20
+            if count > 25:
+                game["count"] = 25
                 logging.warning(
-                    f'Warning: Your backlog game {game.get("name")} had more locations than 20. '
-                    'Number was therefore lowered to 20. Please check your YAML.'
+                    f'Warning: Your backlog game {game.get("name")} had more locations than 25. '
+                    'Number was therefore lowered to 25. Please check your YAML.'
                 )
 
         # Ensure beaten_to_goal is not higher than number_of_islands
