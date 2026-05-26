@@ -83,24 +83,32 @@ def create_main_objective_locations(world: BExWorld, regions: list) -> None:
     backlog_list = list(backlog_option.value) if backlog_option is not None else []
     rnd_backlog_list = list(rnd_backlog_option.value) if rnd_backlog_option is not None else []
 
-    # pick and shuffle backlog games
+    # Create copy of regions to not mess with actual order
+    regions_copy = regions.copy()
+    # Pick and shuffle backlog games
     world.random.shuffle(rnd_backlog_list)
     picked_backlog_list = backlog_list + rnd_backlog_list[:rnd_backlog_amount]
     world.random.shuffle(picked_backlog_list)
 
-    # Add backlog games
-    for region, picked_game in zip(regions, picked_backlog_list):
-        locations_to_add = []
-        world.random.shuffle(monsters)
+    # Shuffle regions to ensure linear progression worlds doesn't always end with medley islands
+    world.random.shuffle(regions_copy)
 
-        for i in range(int(picked_game.get("count"))):
-            location = f"Slay the {monsters[i]} in {region.name}"
+    # Add backlog games to regions
+    for region, picked_game in zip(regions_copy, picked_backlog_list):
+        add_backlog_game_to_region(world, region, picked_game)
 
-            locations_to_add.append(location)
-            create_hint(world, location, picked_game.get('name'))
+def add_backlog_game_to_region(world: BExWorld, region, picked_game):
+    locations_to_add = []
+    world.random.shuffle(monsters)
 
-        loc_w_ids = get_location_names_with_ids(locations_to_add)
-        region.add_locations(loc_w_ids, BExLocation)
+    for i in range(int(picked_game.get("count"))):
+        location = f"Slay the {monsters[i]} in {region.name}"
+
+        locations_to_add.append(location)
+        create_hint(world, location, picked_game.get('name'))
+
+    loc_w_ids = get_location_names_with_ids(locations_to_add)
+    region.add_locations(loc_w_ids, BExLocation)
 
 
 def create_secondary_objective_locations(world: BExWorld, regions: list) -> None:
