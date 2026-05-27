@@ -168,7 +168,7 @@ class RandomIslandOrder(Toggle):
 
 class ForceStartingIslandContent(Toggle):
     """
-    If True: Your starting island is guaranteed to have the first object listed in you "Prioritized Backlog" option
+    If True: Your starting island is guaranteed to have the first game listed in you "Prioritized Backlog" option
     """
     display_name = "Force Starting Island Content"
     default = False
