@@ -7,7 +7,7 @@ from BaseClasses import ItemClassification, Location
 
 import logging
 from . import items
-from .data import monsters, extra_regions, mcguffins, containers, container_modifiers
+from .data import monsters, extra_regions, containers, container_modifiers
 
 if TYPE_CHECKING:
     from .world import BExWorld
@@ -40,37 +40,24 @@ class BExLocation(Location):
 def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | None]:
     return {location_name: LOCATION_NAME_TO_ID[location_name] for location_name in location_names}
 
-def get_regions(world: BExWorld):
-    regions = [world.get_region("Starting Island")]
-
-    option = getattr(world.multiworld.worlds[world.player].options, 'number_of_islands', None)
-    if option is not None:
-        for i in range(option - 1):
-            regions.append(world.get_region(f"{extra_regions[i]} Island"))
-    
-    return regions
-
-
 def create_all_locations(world: BExWorld) -> dict[int, str]:
-    create_regular_locations(world)
-    create_events(world)
+    regions = [
+        world.get_region(f"{name} Island")
+        for name in world.regions_names
+    ]
 
-def create_events(world: BExWorld) -> None:
-    regions = get_regions(world)
+    create_regular_locations(world, regions)
+    create_events(world, regions)
 
-    guffin_id = 0
+def create_events(world: BExWorld, regions: list) -> None:
     for region in regions:
-        location = Location(world.player, f"Retrieved the {mcguffins[guffin_id]}", None, region)
+        location = Location(world.player, f"Retrieved the Artifact of {region.name}", None, region)
         region.locations.append(location)
         
-        item = items.BExItem(mcguffins[guffin_id], ItemClassification.progression, None, world.player)
+        item = items.BExItem(f"Artifact of {region.name}", ItemClassification.progression, None, world.player)
         location.place_locked_item(item)
 
-        guffin_id += 1
-
-def create_regular_locations(world: BExWorld) -> None:
-    regions = get_regions(world)
-
+def create_regular_locations(world: BExWorld, regions: list) -> None:
     create_main_objective_locations(world, regions)
     create_secondary_objective_locations(world, regions)
 
