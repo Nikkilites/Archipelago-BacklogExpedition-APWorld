@@ -108,7 +108,7 @@ class TreasuresToGoal(Range):
 class  RandomizedBacklogAmount(Range):
     """
     How many random backlog games your world will have, in addition to your prioritized backlog games.
-    This number cannot go higher than the amount of games in your "Randomized Backlog" option
+    This number cannot go higher than the amount of games in your "Randomized Backlog" option.
     A maximum of 30.
     """
 
@@ -160,23 +160,23 @@ class  RunesRequired(Range):
 
 class RandomIslandOrder(Toggle):
     """
-    If True: Logically, any island could be unlocked at any time
-    If False: Logically, islands should be unlocked in order.
+    Toggles whether, logically, any island could be unlocked at any time.
+    If disabled, logically, islands should be unlocked in order.
     """
     display_name = "Random Island Order"
     default = True
 
 class ForceStartingIslandContent(Toggle):
     """
-    If True: Your starting island is guaranteed to have the first game listed in you "Prioritized Backlog" option
+    Toggles whether Your starting island is guaranteed to have the first game listed in you "Prioritized Backlog" option.
     """
     display_name = "Force Starting Island Content"
     default = False
 
 class HintShopCost(Range):
     """
-    The percentage of your worlds trash you must collect to gain a hint from the hint shop
-    At 0, the hint shop will be disabled completely
+    The percentage of your worlds trash you must collect to gain a hint from the hint shop.
+    At 0, the hint shop will be disabled completely.
     """
 
     display_name = "Hint Shop Cost"
