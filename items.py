@@ -56,11 +56,16 @@ def create_all_items(world: BExWorld) -> None:
     itempool = []
 
     runes_req = getattr(world.multiworld.worlds[world.player].options, 'runes_required', None)
-    islands = getattr(world.multiworld.worlds[world.player].options, 'number_of_islands', None)
-    if islands is not None:
-        for i in range(islands - 1):
-            for num in range(runes_req):
-                itempool.append(world.create_item(f"{extra_regions[i]} Rune"))
+
+    region_names = [
+        region.name.removesuffix(" Island")
+        for region in world.multiworld.get_regions(world.player)
+        if region.name != "Starting Island"
+    ]
+
+    for region_name in region_names:
+        for num in range(runes_req):
+            itempool.append(world.create_item(f"{region_name} Rune"))
 
     number_of_items = len(itempool)
     number_of_unfilled_locations = len(world.multiworld.get_unfilled_locations(world.player))

@@ -7,7 +7,7 @@ from BaseClasses import ItemClassification, Location
 
 import logging
 from . import items
-from .data import monsters, extra_regions, mcguffins, containers, container_modifiers
+from .data import monsters, extra_regions, containers, container_modifiers
 
 if TYPE_CHECKING:
     from .world import BExWorld
@@ -40,37 +40,24 @@ class BExLocation(Location):
 def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | None]:
     return {location_name: LOCATION_NAME_TO_ID[location_name] for location_name in location_names}
 
-def get_regions(world: BExWorld):
-    regions = [world.get_region("Starting Island")]
-
-    option = getattr(world.multiworld.worlds[world.player].options, 'number_of_islands', None)
-    if option is not None:
-        for i in range(option - 1):
-            regions.append(world.get_region(f"{extra_regions[i]} Island"))
-    
-    return regions
-
-
 def create_all_locations(world: BExWorld) -> dict[int, str]:
-    create_regular_locations(world)
-    create_events(world)
+    regions = [
+        world.get_region(f"{name} Island")
+        for name in world.regions_names
+    ]
 
-def create_events(world: BExWorld) -> None:
-    regions = get_regions(world)
+    create_regular_locations(world, regions)
+    create_events(world, regions)
 
-    guffin_id = 0
+def create_events(world: BExWorld, regions: list) -> None:
     for region in regions:
-        location = Location(world.player, f"Retrieved the {mcguffins[guffin_id]}", None, region)
+        location = Location(world.player, f"Retrieved the Artifact of {region.name}", None, region)
         region.locations.append(location)
         
-        item = items.BExItem(mcguffins[guffin_id], ItemClassification.progression, None, world.player)
+        item = items.BExItem(f"Artifact of {region.name}", ItemClassification.progression, None, world.player)
         location.place_locked_item(item)
 
-        guffin_id += 1
-
-def create_regular_locations(world: BExWorld) -> None:
-    regions = get_regions(world)
-
+def create_regular_locations(world: BExWorld, regions: list) -> None:
     create_main_objective_locations(world, regions)
     create_secondary_objective_locations(world, regions)
 
@@ -83,24 +70,39 @@ def create_main_objective_locations(world: BExWorld, regions: list) -> None:
     backlog_list = list(backlog_option.value) if backlog_option is not None else []
     rnd_backlog_list = list(rnd_backlog_option.value) if rnd_backlog_option is not None else []
 
-    # pick and shuffle backlog games
+    # Create copy of regions to not mess with actual order
+    regions_copy = regions.copy()
+
+    # Preset staring island content before randomization if option is toggled
+    if world.options.force_starting_island_content:
+        add_backlog_game_to_region(world, regions_copy[0], backlog_list[0])
+        del regions_copy[0]
+        del backlog_list[0]
+
+    # Pick and shuffle backlog games
     world.random.shuffle(rnd_backlog_list)
     picked_backlog_list = backlog_list + rnd_backlog_list[:rnd_backlog_amount]
     world.random.shuffle(picked_backlog_list)
 
-    # Add backlog games
-    for region, picked_game in zip(regions, picked_backlog_list):
-        locations_to_add = []
-        world.random.shuffle(monsters)
+    # Shuffle regions to ensure linear progression worlds doesn't always end with medley islands
+    world.random.shuffle(regions_copy)
 
-        for i in range(int(picked_game.get("count"))):
-            location = f"Slay the {monsters[i]} in {region.name}"
+    # Add backlog games to regions
+    for region, picked_game in zip(regions_copy, picked_backlog_list):
+        add_backlog_game_to_region(world, region, picked_game)
 
-            locations_to_add.append(location)
-            create_hint(world, location, picked_game.get('name'))
+def add_backlog_game_to_region(world: BExWorld, region, picked_game):
+    locations_to_add = []
+    world.random.shuffle(monsters)
 
-        loc_w_ids = get_location_names_with_ids(locations_to_add)
-        region.add_locations(loc_w_ids, BExLocation)
+    for i in range(int(picked_game.get("count"))):
+        location = f"Slay the {monsters[i]} in {region.name}"
+
+        locations_to_add.append(location)
+        create_hint(world, location, picked_game.get('name'))
+
+    loc_w_ids = get_location_names_with_ids(locations_to_add)
+    region.add_locations(loc_w_ids, BExLocation)
 
 
 def create_secondary_objective_locations(world: BExWorld, regions: list) -> None:

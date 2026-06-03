@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 from schema import Schema, And
 
-from Options import OptionGroup, PerGameCommonOptions, Range, OptionList
+from Options import Choice, Toggle, OptionGroup, PerGameCommonOptions, Range, OptionList
 
 
 class PrioritizedBacklog(OptionList):
     """
     Games that will be your goal on an island.
     These games will always be included, and generate as many locations as defined here.
-    Maximum of 20 games allowed, with a maximum of 20 locations per game.
+    Maximum of 30 games allowed, with a maximum of 25 locations per game.
     """
 
     display_name = "Prioritized Backlog"
@@ -28,7 +28,7 @@ class RandomizedBacklog(OptionList):
     """
     Games that will be your goal on an island.
     These games will be randomly picked, based on your "Randomized Backlog Amount" option, and will generate as many locations as defined here.
-    You can put an unlimited amount of games here, with a maximum of 20 locations per game.
+    You can put an unlimited amount of games here, with a maximum of 25 locations per game.
     """
 
     display_name = "Randomized Backlog"
@@ -96,26 +96,26 @@ class TreasuresToGoal(Range):
     """
     How many Treasures you need to find to Goal.
     On each island you will find a treasure, so this number can only go as high as your "Number Of Islands" option.
-    A maximum of 20, and minimum of 1.
+    A maximum of 30, and minimum of 1.
     """
 
     display_name = "Treasures To Goal"
 
     range_start = 1
-    range_end = 20
+    range_end = 30
     default = 3
 
 class  RandomizedBacklogAmount(Range):
     """
     How many random backlog games your world will have, in addition to your prioritized backlog games.
-    This number cannot go higher than the amount of games in your "Randomized Backlog" option
-    A maximum of 20.
+    This number cannot go higher than the amount of games in your "Randomized Backlog" option.
+    A maximum of 30.
     """
 
     display_name = "Randomized Backlog Amount"
 
     range_start = 0
-    range_end = 20
+    range_end = 30
     default = 1
 
 class  NumberOfIslands(Range):
@@ -123,13 +123,13 @@ class  NumberOfIslands(Range):
     How many Islands your world will have.
     Make sure that this number is either equal to or higher than the amount of games in your "Prioritized Backlog" option + your "Randomized Backlog Amount" option.
     An Island that is not filled with a Backlog Game will instead become a medley island, filled with random objectives from the other location lists.
-    A maximum of 20, and minimum of 1.
+    A maximum of 30, and minimum of 1.
     """
 
     display_name = "Number Of Islands"
 
     range_start = 1
-    range_end = 20
+    range_end = 30
     default = 4
 
 class  LocationsPerIsland(Range):
@@ -137,13 +137,13 @@ class  LocationsPerIsland(Range):
     How many Locations each island should try to be filled with.
     If no repeatable locations are added, generation will fill up as much as possible.
     Locations needed for games put in any of the Backlog options are guaranteed to exist though.
-    A maximum of 20.
+    A maximum of 25.
     """
 
     display_name = "Locations Per Island"
 
     range_start = 0
-    range_end = 20
+    range_end = 25
     default = 10
 
 class  RunesRequired(Range):
@@ -158,12 +158,39 @@ class  RunesRequired(Range):
     range_end = 5
     default = 2
 
+class RandomIslandOrder(Toggle):
+    """
+    Toggles whether, logically, any island could be unlocked at any time.
+    If disabled, logically, islands should be unlocked in order.
+    """
+    display_name = "Random Island Order"
+    default = True
+
+class ForceStartingIslandContent(Toggle):
+    """
+    Toggles whether Your starting island is guaranteed to have the first game listed in you "Prioritized Backlog" option.
+    """
+    display_name = "Force Starting Island Content"
+    default = False
+
+class HintShopCost(Range):
+    """
+    The percentage of your worlds trash you must collect to gain a hint from the hint shop.
+    At 0, the hint shop will be disabled completely.
+    """
+
+    display_name = "Hint Shop Cost"
+
+    range_start = 0
+    range_end = 100
+    default = 20
+
 
 @dataclass
 class BExOptions(PerGameCommonOptions):
     number_of_islands: NumberOfIslands
     locations_per_island: LocationsPerIsland
-    beaten_to_goal: TreasuresToGoal
+    treasures_to_goal: TreasuresToGoal
     randomized_backlog_amount: RandomizedBacklogAmount
     prioritized_backlog: PrioritizedBacklog
     randomized_backlog: RandomizedBacklog
@@ -171,12 +198,19 @@ class BExOptions(PerGameCommonOptions):
     limited_locations: LimitedLocations
     repeatable_locations: RepeatableLocations
     runes_required: RunesRequired
+    random_island_order: RandomIslandOrder
+    force_starting_island_content: ForceStartingIslandContent
+    hint_shop_cost: HintShopCost
 
 
 option_groups = [
     OptionGroup(
         "Game Options",
         [NumberOfIslands, LocationsPerIsland, TreasuresToGoal, RandomizedBacklogAmount, RunesRequired],
+    ),
+    OptionGroup(
+        "Advanced Options",
+        [RandomIslandOrder, ForceStartingIslandContent, HintShopCost],
     ),
     OptionGroup(
         "Game Additions",

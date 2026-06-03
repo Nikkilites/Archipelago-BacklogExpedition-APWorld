@@ -34,12 +34,22 @@ class BExWorld(World):
         islands = self.options.number_of_islands
         prio_len = len(self.options.prioritized_backlog.value)
         rand_len = len(self.options.randomized_backlog.value)
+        force_start_content = self.options.force_starting_island_content
 
         # Throw exception if number_of_islands is too small to hold amount of games in prioritized_backlog
         if islands < prio_len:
             raise OptionError(
                 "Error: Your number_of_islands is smaller than required for your amount of prioritized backlog games. "
                 "Please check your YAML, and increase your number of islands or select fewer prioritized backlog games"
+            )
+        
+        # Ensure force_starting_island_content is false, if no backlog games were put in prioritized_backlog
+        if (force_start_content == True) & (prio_len <= 0):
+            self.options.force_starting_island_content.value = False
+            logging.warning(
+                "Error: You need to have an entry in your prioritized backlog games to force the Starting Island content"
+                "force_starting_island_content was set to false"
+                "If you want to force the Starting Island content, please check your YAML and add a game to your prioritized backlog games"
             )
 
         # Ensure there are enough empty islands to hold selected amount of randomized games defined by randomized_backlog_amount
@@ -59,23 +69,23 @@ class BExWorld(World):
                 f"randomized_backlog_amount was set to {rand_len}. Please check your YAML."
             )
 
-        # Ensure backlog games do not have more than 20 locations each
+        # Ensure backlog games do not have more than 25 locations each
         backlog = self.options.prioritized_backlog.value + self.options.randomized_backlog.value
         for game in backlog:
             count = game.get("count", 0)
-            if count > 20:
-                game["count"] = 20
+            if count > 25:
+                game["count"] = 25
                 logging.warning(
-                    f'Warning: Your backlog game {game.get("name")} had more locations than 20. '
-                    'Number was therefore lowered to 20. Please check your YAML.'
+                    f'Warning: Your backlog game {game.get("name")} had more locations than 25. '
+                    'Number was therefore lowered to 25. Please check your YAML.'
                 )
 
-        # Ensure beaten_to_goal is not higher than number_of_islands
-        if self.options.beaten_to_goal > islands:
-            self.options.beaten_to_goal.value = islands.value
+        # Ensure treasures_to_goal is not higher than number_of_islands
+        if self.options.treasures_to_goal > islands:
+            self.options.treasures_to_goal.value = islands.value
             logging.warning(
-                f"Warning: Your beaten_to_goal was higher than your number_of_islands. "
-                "Number was therefore lowered. Please check your YAML and lower your beaten_to_goal to be less than or equal to number_of_islands."
+                f"Warning: Your treasures_to_goal was higher than your number_of_islands. "
+                "Number was therefore lowered. Please check your YAML and lower your treasures_to_goal to be less than or equal to number_of_islands."
             )
         
         # Warning for having too many prioritized locations than what is able to be filled happens in locations.py
@@ -97,7 +107,7 @@ class BExWorld(World):
         return items.get_random_filler_item_name(self)
 
     def fill_slot_data(self) -> Mapping[str, Any]:
-        slot_data = self.options.as_dict("beaten_to_goal", "runes_required")
+        slot_data = self.options.as_dict("treasures_to_goal", "runes_required", "hint_shop_cost")
         slot_data["hint_data"] = self.hint_data
         return slot_data
     
