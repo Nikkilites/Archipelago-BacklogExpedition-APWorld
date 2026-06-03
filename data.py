@@ -211,7 +211,7 @@ mcguffins = [
     "Unearthly Metal", 
     "Ugly Alpaca Sweater", 
     "Homemade Quilt",
-    "Circuit Board",
-    "The Missing Piece", 
+    "Golden Meeple",
+    "Missing Piece", 
     "Grand Symphony Sheets"
 ]
