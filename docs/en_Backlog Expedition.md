@@ -8,7 +8,7 @@ You are Logmundr, a small Viking on a quest to raid an entire archipelago for tr
 
 Additionally, you can choose to add other custom objectives to the islands, as well as create medley islands that replace a single game with these custom objectives.
 
-- Up to 400 custom locations possible.
+- Up to 750 custom locations possible.
 - 5 types of custom locations. *(Prioritized and Randomized Backlog, as well as Prioritized, Limited and Repeatable Locations)*.
   - Games put in Prioritized Backlog will each be placed on their own island, and have the amount of locations present as defined in your YAML.
   - Games put in Randomized Backlog will likewise each be placed on their own island, but only however a certain amount of these games will show up in your world, defined in your YAML.
@@ -20,8 +20,11 @@ Additionally, you can choose to add other custom objectives to the islands, as w
 - If a Backlog game is bigger than the allowed amount of locations on an island, all parts will still all be included. *(up to a maximum of 20)*.
 - You goal the game by collecting the amount of treasure defined in your YAML.
 - Use the optional Hint Shop to spend your trash on random location hints in your slot!
-  - Each hint costs 5% of your total trash items in your slot.
+  - The percentage of all trash in your slot required to purchase a hint is set by the Hint Shop Cost option.
   - It is completely random which type of hint you will receive.
+  - The Hint shop can be disabled
+- It is possible to choose what content shows up on your very first island using the Force Starting Island Content option
+- Is is possible to let the order of islands (In the logic) be linear, so you more easily are able to determine which island will likely be unlocked next. This is done by using the Random Island Order option
  
 *Disclaimer. Since you are beating full games using BEx, it is not recommended to bring it to syncs*
 
