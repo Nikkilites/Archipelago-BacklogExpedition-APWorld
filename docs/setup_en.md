@@ -1,7 +1,5 @@
 # Backlog Expedition Multiworld Setup Guide
 
-## Web version
-
 ### Required Software
 
 - Backlog Expedition [Webpage](https://www.bex-ap.com/)
