@@ -25,12 +25,14 @@ Additionally, you can choose to add other custom objectives to the islands, as w
   - The Hint shop can be disabled
 - It is possible to choose what content shows up on your very first island using the Force Starting Island Content option
 - Is is possible to let the order of islands (In the logic) be linear, so you more easily are able to determine which island will likely be unlocked next. This is done by using the Random Island Order option
+
+Learn more about what you need to use BEx [here](https://github.com/Nikkilites/Archipelago-BacklogExpedition-APWorld/blob/main/docs/setup_en.md)
  
-*Disclaimer. Since you are beating full games using BEx, it is not recommended to bring it to syncs*
+*Disclaimer. Since you are beating full games using BEx, it is not recommended to bring it to syncs unless you have set up your yaml in a very specific way*
 
 ## Terms used in BEx explained
 ### Backlog
-The meaning of Backlog in the context of BEx is a list of games (or other media) you own or have access to, and have yet to, and want to, play or experience.
+The meaning of Backlog in the context of BEx is a list of games (or other media) you own or have access to, that you have yet to play or experience.
 
 ### Islands
 Islands are the areas you will open throughout your world, with new locations and objectives for you to complete, generated depending on the info you put into your YAML.
