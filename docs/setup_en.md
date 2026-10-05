@@ -9,3 +9,9 @@
 
 1. Simply connect to the server on the webpage and log in
 2. Enjoy!
+
+### More Info
+
+- Learn more about how to setup your yaml on [this info page](https://github.com/Nikkilites/Archipelago-BacklogExpedition-APWorld/edit/main/docs/en_Backlog%20Expedition.md)
+- Get inspiration on how to part up games in the community spreadsheet [here!](https://docs.google.com/spreadsheets/d/1StOhFUO3ix--mWpj-CoIzmT7p0GhiGwoAU4qsTIA4WM/edit?gid=0#gid=0)
+- Want to be part of testing the new webpage? Find it [here](https://bex-ap.netlify.app/)
